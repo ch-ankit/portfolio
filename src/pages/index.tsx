@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 
 import ProfileCard from "./components/ProfileCard/ProfileCard"
+import Link from 'next/link';
 
 const Portfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -375,7 +376,9 @@ const Portfolio = () => {
               <div key={index} className="bg-slate-700/50 backdrop-blur-sm p-6 rounded-lg border border-slate-600 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-105">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-semibold text-blue-400 mb-2">{project.title}</h3>
+                  <Link href={project.link} target='__blank'>
                   <ExternalLink size={18} className="text-gray-400 hover:text-blue-400 cursor-pointer" />
+                  </Link>
                 </div>
                 <p className="text-gray-300 text-sm mb-2">{project.company} • {project.period}</p>
                 <p className="text-gray-300 mb-4 leading-relaxed">{project.description}</p>
