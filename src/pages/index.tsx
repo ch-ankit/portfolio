@@ -82,7 +82,7 @@ const Portfolio = () => {
       period: "Mar 2024 – Present",
       description: "Agent-based LLM application with interactive UI. Optimized frontend performance with virtual rendering for large datasets.",
       technologies: ["TypeScript", "HTML", "Tailwind CSS", "Virtual Rendering"],
-      link: "#"
+      link: "https://denzing.com/"
     },
     {
       title: "Customer Segmentation Dashboard",
@@ -93,12 +93,12 @@ const Portfolio = () => {
       link: "#"
     },
     {
-      title: "E-Commerce Application",
+      title: "Hukut Store",
       company: "Octagon Infotech Pvt. Ltd",
       period: "Sep 2023 – Jan 2024",
       description: "Migrated application from Magento to Next.js/React with mobile-first design approach.",
       technologies: ["Next.js", "React", "Mobile-First Design"],
-      link: "#"
+      link: "https://hukut.com/"
     },
     {
       title: "19-bit CPU Architecture",
