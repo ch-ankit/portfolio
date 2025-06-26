@@ -1,115 +1,506 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import React, { useState, useEffect } from 'react';
+import { 
+  Github, 
+  Linkedin, 
+  Mail, 
+  MapPin, 
+  Phone, 
+  Download, 
+  ExternalLink,
+  Code,
+  Database,
+  Server,
+  Users,
+  BookOpen,
+  Menu,
+  X
+} from 'lucide-react';
 
-const inter = Inter({ subsets: ['latin'] })
+import ProfileCard from "./components/ProfileCard/ProfileCard"
 
-export default function Home() {
+const Portfolio = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'contact', label: 'Contact' }
+  ];
+
+  const experiences = [
+    {
+      title: "Software Engineer I",
+      company: "LIS Nepal Pvt. Ltd",
+      period: "Jan 2025 – Present",
+      location: "Manbhawan, Lalitpur",
+      description: "Spearheading development of cutting-edge LLM-powered products using Next.js. Managing complex tables with TanStack Table and customizing open source projects.",
+      technologies: ["Next.js", "TypeScript", "TanStack Table", "LLM Integration"]
+    },
+    {
+      title: "Associate Software Engineer",
+      company: "LIS Nepal Pvt. Ltd",
+      period: "Jan 2024 – Jan 2025",
+      location: "Manbhawan, Lalitpur",
+      description: "Developed ETL processes for retail data using Python and Snowflake. Conducted data validations and designed interactive dashboards.",
+      technologies: ["Python", "Snowflake", "SQL", "Data Visualization", "ETL"]
+    },
+    {
+      title: "Associate Software Engineer",
+      company: "Octagon Infotech Pvt. Ltd",
+      period: "Sep 2023 – Jan 2024",
+      location: "Panipokhari, Kathmandu",
+      description: "Engineered responsive web applications with React. Led migration from Magento to Next.js/React application.",
+      technologies: ["React", "Next.js", "Magento", "SEO Optimization"]
+    },
+    {
+      title: "Associate Data Engineer",
+      company: "Cedar Gate Technologies",
+      period: "Jul 2023 – Sep 2023",
+      location: "Sanepa, Lalitpur",
+      description: "Developed data pipelines and executed ETL processes for healthcare data. Automated repetitive data import tasks.",
+      technologies: ["SQL", "Excel", "Data Pipeline", "Healthcare Data"]
+    }
+  ];
+
+  const projects = [
+    {
+      title: "Intelliome/Denzing",
+      company: "LIS Nepal Pvt. Ltd",
+      period: "Mar 2024 – Present",
+      description: "Agent-based LLM application with interactive UI. Optimized frontend performance with virtual rendering for large datasets.",
+      technologies: ["TypeScript", "HTML", "Tailwind CSS", "Virtual Rendering"],
+      link: "#"
+    },
+    {
+      title: "Customer Segmentation Dashboard",
+      company: "LIS Nepal Pvt. Ltd",
+      period: "Jan 2024 – Mar 2024",
+      description: "Data visualization dashboards using D3.js and Vega with responsive interface design.",
+      technologies: ["D3.js", "Vega", "TypeScript", "Data Analysis"],
+      link: "#"
+    },
+    {
+      title: "E-Commerce Application",
+      company: "Octagon Infotech Pvt. Ltd",
+      period: "Sep 2023 – Jan 2024",
+      description: "Migrated application from Magento to Next.js/React with mobile-first design approach.",
+      technologies: ["Next.js", "React", "Mobile-First Design"],
+      link: "#"
+    },
+    {
+      title: "19-bit CPU Architecture",
+      company: "Kathmandu University",
+      period: "Apr 2021 – Oct 2021",
+      description: "Designed custom CPU model (ANBU Computer) with 14-bit address bus supporting 16K memory locations.",
+      technologies: ["Computer Architecture", "Assembly", "Hardware Design"],
+      link: "#"
+    }
+  ];
+
+  const skills = {
+    "Programming": ["JavaScript", "TypeScript", "Python"],
+    "Frontend": ["Next.js", "React", "HTML5", "CSS3", "Tailwind CSS"],
+    "Backend": ["Express.js", "Node.js"],
+    "Database": ["MySQL", "PostgreSQL", "Elasticsearch", "Snowflake"],
+    "Tools": ["dbt", "Git", "Docker", "TanStack Table"]
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(sectionId);
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <h1 className="bg-white text-black">Ankit Khatiwada</h1>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white">
+      {/* Navigation */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-slate-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      }`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              AK
+            </div>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex space-x-8">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`hover:text-blue-400 transition-colors ${
+                    activeSection === item.id ? 'text-blue-400' : 'text-gray-300'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+
+          {/* Mobile Navigation */}
+          {isMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 w-full bg-slate-900/95 backdrop-blur-md border-t border-slate-700">
+              <div className="px-4 py-2 space-y-2">
+                {navItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className="block w-full text-left py-2 px-4 hover:bg-slate-800 rounded transition-colors"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      </nav>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {/* Hero Section */}
+      <section id="home" className="min-h-screen flex items-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className='mt-3'>
+              <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                  Ankit
+                </span>
+                <br />
+                <span className="text-white">Khatiwada</span>
+              </h1>
+              <h2 className="text-2xl md:text-3xl text-gray-300 mb-6">
+                Software Engineer & Data Enthusiast
+              </h2>
+              <p className="text-lg text-gray-400 mb-8 leading-relaxed">
+                Passionate about building cutting-edge LLM-powered applications and robust data pipelines. 
+                Experienced in full-stack development with expertise in Next.js, Python, and modern web technologies.
+              </p>
+              
+              <div className="flex flex-wrap gap-4 mb-8">
+                <button 
+                  onClick={() => scrollToSection('contact')}
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+                >
+                  Get In Touch
+                </button>
+                <a 
+                  href="#"
+                  className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2"
+                >
+                  <Download size={20} />
+                  Download CV
+                </a>
+              </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+              <div className="flex gap-6">
+                <a href="mailto:akgunner6@gmail.com" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  <Mail size={24} />
+                </a>
+                <a href="https://github.com/ch-ankit" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  <Github size={24} />
+                </a>
+                <a href="https://linkedin.com/in/ankit-khatiwada-ak/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  <Linkedin size={24} />
+                </a>
+              </div>
+            </div>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+            <div className="hidden lg:flex justify-center items-center mt-24">
+              <div className="relative">  
+                <ProfileCard
+                  name="Ankit Khatiwada"
+                  title="Software Engineer"
+                  handle="ankyeet"
+                  status="Online"
+                  contactText="Contact Me"
+                  avatarUrl="/ankit.jpg"
+                  showUserInfo={true}
+                  enableTilt={true}
+                  behindGradient=""
+                  innerGradient=""
+                  onContactClick={() => document.getElementById("mail-link")?.click()}
+                  miniAvatarUrl="/ankit.jpg"
+                />
+                {/* <div className="w-80 h-80 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+                <div className="absolute top-10 left-10 w-60 h-60 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-full blur-2xl"></div> */}
+              </div>
+            </div>
+          </div>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mt-16">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-2">2+</div>
+              <div className="text-gray-400">Years Experience</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-2">10+</div>
+              <div className="text-gray-400">Projects Completed</div>
+            </div>
+            {/* <div className="text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-2">3.90</div>
+              <div className="text-gray-400">CGPA</div>
+            </div> */}
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-2">5+</div>
+              <div className="text-gray-400">Technologies</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+      {/* About Section */}
+      <section id="about" className="py-20 bg-slate-800/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center mb-16">About Me</h2>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-2xl font-semibold mb-6 text-blue-400">My Journey</h3>
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                I&apos;m a Computer Engineering graduate from Kathmandu University with a strong passion for 
+                software development and data engineering. My journey began with a curiosity about how 
+                technology can solve real-world problems, leading me to specialize in full-stack development 
+                and data pipeline engineering.
+              </p>
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                Currently working as a Software Engineer at LIS Nepal, I focus on developing LLM-powered 
+                applications and creating robust data solutions. I enjoy working with cutting-edge technologies 
+                and contributing to open-source projects.
+              </p>
+              
+              <div className="flex items-center gap-2 text-gray-400 mb-2">
+                <MapPin size={18} />
+                <span>Bhaktapur, Nepal</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-400 mb-2">
+                <Phone size={18} />
+                <span>(+977)-9861286950</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-400">
+                <Mail size={18} />
+                <span>akgunner6@gmail.com</span>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <div className="bg-slate-700/50 p-6 rounded-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <BookOpen className="text-blue-400" size={24} />
+                  <h4 className="text-xl font-semibold">Education</h4>
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <h5 className="font-semibold text-blue-400">Bachelor of Engineering</h5>
+                    <p className="text-gray-300">Computer Engineering - Kathmandu University</p>
+                    <p className="text-gray-400 text-sm">2018-2023</p>
+                    {/* CGPA: 3.90/4.0 */}
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-blue-400">+2 Science</h5>
+                    <p className="text-gray-300">St. Xavier&apos;s College</p>
+                    <p className="text-gray-400 text-sm"> 2016-2018 </p> 
+                    {/* CGPA: 3.54/4.0 */}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section id="experience" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center mb-16">Experience</h2>
+          <div className="space-y-8">
+            {experiences.map((exp, index) => (
+              <div key={index} className="bg-slate-800/50 backdrop-blur-sm p-8 rounded-lg border border-slate-700 hover:border-blue-500/50 transition-all duration-300">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                  <div>
+                    <h3 className="text-xl font-semibold text-blue-400 mb-1">{exp.title}</h3>
+                    <p className="text-lg text-gray-300">{exp.company}</p>
+                  </div>
+                  <div className="text-gray-400 text-sm md:text-right">
+                    <p>{exp.period}</p>
+                    <p>{exp.location}</p>
+                  </div>
+                </div>
+                <p className="text-gray-300 mb-4 leading-relaxed">{exp.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {exp.technologies.map((tech, techIndex) => (
+                    <span key={techIndex} className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-sm">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-20 bg-slate-800/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center mb-16">Featured Projects</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {projects.map((project, index) => (
+              <div key={index} className="bg-slate-700/50 backdrop-blur-sm p-6 rounded-lg border border-slate-600 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-105">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-xl font-semibold text-blue-400 mb-2">{project.title}</h3>
+                  <ExternalLink size={18} className="text-gray-400 hover:text-blue-400 cursor-pointer" />
+                </div>
+                <p className="text-gray-300 text-sm mb-2">{project.company} • {project.period}</p>
+                <p className="text-gray-300 mb-4 leading-relaxed">{project.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech, techIndex) => (
+                    <span key={techIndex} className="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center mb-16">Technical Skills</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Object.entries(skills).map(([category, skillList], index) => (
+              <div key={index} className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-lg border border-slate-700">
+                <div className="flex items-center gap-3 mb-4">
+                  {category === 'Programming' && <Code className="text-blue-400" size={24} />}
+                  {category === 'Frontend' && <Server className="text-green-400" size={24} />}
+                  {category === 'Backend' && <Server className="text-purple-400" size={24} />}
+                  {category === 'Database' && <Database className="text-yellow-400" size={24} />}
+                  {category === 'Tools' && <Users className="text-red-400" size={24} />}
+                  <h3 className="text-xl font-semibold">{category}</h3>
+                </div>
+                <div className="space-y-2">
+                  {skillList.map((skill, skillIndex) => (
+                    <div key={skillIndex} className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                      <span className="text-gray-300">{skill}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-slate-800/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center mb-16">Get In Touch</h2>
+          <div className="text-center mb-12">
+            <p className="text-xl text-gray-300 mb-8">
+              I&apos;m always interested in new opportunities and exciting projects. 
+              Let&apos;s connect and discuss how we can work together!
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="text-center">
+              <div className="bg-blue-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mail className="text-blue-400" size={24} />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Email</h3>
+              <p className="text-gray-400">akgunner6@gmail.com</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-green-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Phone className="text-green-400" size={24} />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Phone</h3>
+              <p className="text-gray-400">(+977)-9861286950</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-purple-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <MapPin className="text-purple-400" size={24} />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Location</h3>
+              <p className="text-gray-400">Bhaktapur, Nepal</p>
+            </div>
+          </div>
+
+          <div className="flex justify-center gap-6">
+            <a
+              id="mail-link" 
+              href="mailto:akgunner6@gmail.com"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center gap-2"
+            >
+              <Mail size={20} />
+              Send Email
+            </a>
+            <a 
+              href="https://linkedin.com/in/ankit-khatiwada-ak/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2"
+            >
+              <Linkedin size={20} />
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 bg-slate-900 border-t border-slate-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-gray-400 mb-4 md:mb-0">
+              © 2025 Ankit Khatiwada. All rights reserved.
+            </div>
+            <div className="flex gap-6">
+              <a href="mailto:akgunner6@gmail.com" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <Mail size={20} />
+              </a>
+              <a href="https://github.com/ch-ankit" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <Github size={20} />
+              </a>
+              <a href="https://linkedin.com/in/ankit-khatiwada-ak/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <Linkedin size={20} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Portfolio;
