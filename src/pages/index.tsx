@@ -86,6 +86,13 @@ const projects = [
     technologies: ['Python', 'NLP', 'SQL'],
     link: 'https://github.com/ch-ankit/Manage-Personal-Health-Data',
   },
+  {
+    title: 'Saman Pathao: Logistics Mobile Application',
+    description:
+      'A cross-platform goods-delivery app with separate driver and customer interfaces, covering registration, order placement, delivery scheduling, and order history.',
+    technologies: ['Flutter', 'Node.js', 'MongoDB', 'Mapbox API'],
+    link: 'https://github.com/ch-ankit/saman-pathao',
+  },
 ];
 
 const skills = [
@@ -99,15 +106,19 @@ const skills = [
   },
   {
     label: 'Computer Vision',
-    items: ['Image Classification', 'Vision-Language Concepts'],
+    items: ['High-Level Computer Vision', 'Image Classification', 'Vision-Language Concepts'],
   },
   {
     label: 'Programming',
-    items: ['Python', 'SQL', 'R', 'TypeScript', 'JavaScript', 'MATLAB'],
+    items: ['Python', 'Go', 'SQL', 'TypeScript', 'MATLAB', 'R'],
   },
   {
     label: 'Data & Tooling',
-    items: ['ETL Pipelines', 'dbt', 'D3.js', 'Vega', 'Git', 'GitHub', 'Linux'],
+    items: ['ETL Pipelines', 'dbt', 'D3.js', 'Vega', 'Git', 'GitHub'],
+  },
+  {
+    label: 'Database & Storage',
+    items: ['MongoDB', 'PostgreSQL', 'Redis', 'AWS S3'],
   },
 ];
 
@@ -117,7 +128,7 @@ const education = [
     school: 'Saarland Informatics Campus, Saarland University',
     period: 'Apr 2026 — Present',
     location: 'Saarbrücken, Germany',
-    detail: 'Grade: 1.7 · Data Networks, Computer Vision, Sports Analytics',
+    detail: 'Grade: 1.7 · High-Level Computer Vision, Machine Learning, Neural Networks',
   },
   {
     degree: 'B.Eng. in Computer Engineering',
@@ -196,7 +207,7 @@ const Portfolio = () => {
             </nav>
 
             <a
-              href="/Ankit_Res.pdf"
+              href="/Resume-2.pdf"
               download
               className="hidden items-center gap-2 rounded-full border border-ink px-4 py-2 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-paper md:inline-flex"
             >
@@ -228,7 +239,7 @@ const Portfolio = () => {
                 </button>
               ))}
               <a
-                href="/Ankit_Res.pdf"
+                href="/Resume-2.pdf"
                 download
                 className="mt-4 inline-flex items-center gap-2 self-start rounded-full border border-ink px-4 py-2 font-mono text-[11px] uppercase tracking-[0.16em]"
               >
@@ -272,7 +283,7 @@ const Portfolio = () => {
                     <ArrowUpRight size={16} />
                   </button>
                   <a
-                    href="/Ankit_Res.pdf"
+                    href="/Resume-2.pdf"
                     download
                     className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-sm font-medium transition-colors hover:border-ink"
                   >
@@ -393,7 +404,11 @@ const Portfolio = () => {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex flex-col bg-paper p-8 transition-colors hover:bg-cream md:p-10"
+                  className={`group flex flex-col bg-paper p-8 transition-colors hover:bg-cream md:p-10 ${
+                    index === projects.length - 1 && projects.length % 2 === 1
+                      ? 'md:col-span-2'
+                      : ''
+                  }`}
                 >
                   <div className="flex items-start justify-between">
                     <span className="font-mono text-xs text-accent">
@@ -461,7 +476,7 @@ const Portfolio = () => {
                     Certifications
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted">
-                    Intermediate R (DataCamp) · AI Fundamentals (DataCamp) · dbt Fundamentals (dbt Labs)
+                    AI Fundamentals (DataCamp) · Intermediate R (DataCamp) · Data Cleaning in R (DataCamp)
                   </p>
                 </div>
 
