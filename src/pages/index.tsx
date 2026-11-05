@@ -258,7 +258,7 @@ const Portfolio = () => {
               <div className="animate-rise">
                 <p className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
                   <span className="h-px w-10 bg-accent" />
-                  AI Engineer · Computer Vision Researcher
+                  AI Engineer · Data Analyst · Computer Vision Researcher
                 </p>
 
                 <h1 className="mt-7 font-serif text-6xl leading-[0.92] tracking-tight sm:text-7xl lg:text-[6.5rem]">
@@ -269,9 +269,9 @@ const Portfolio = () => {
 
                 <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted">
                   M.Sc. Computer Science student at Saarland University with industry
-                  experience building NLP and LLM-powered systems. Interested in computer
-                  vision, vision-language models, and applied machine learning for sports
-                  analytics.
+                  experience building NLP and LLM-powered systems, plus a background in
+                  data engineering and analysis. Interested in computer vision, vision-language
+                  models, applied machine learning for sports analytics, and data analysis.
                 </p>
 
                 <div className="mt-10 flex flex-wrap gap-3">
